@@ -1,6 +1,6 @@
 {
   "name": "@quotable-value/serverless",
-  "version": "3.38.0",
+  "version": "3.38.1",
   "description": "Serverless Framework - Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more",
   "preferGlobal": true,
   "homepage": "https://serverless.com/framework/docs/",
@@ -223,6 +223,7 @@
     ]
   },
   "scripts": {
+    "preinstall": "export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2 --query authorizationToken --output text`",
     "commitlint": "commitlint -f HEAD@{15}",
     "coverage": "nyc npm test",
     "integration-test-cleanup": "node test/utils/aws-cleanup.js",
