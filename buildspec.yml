@@ -1,0 +1,9 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo "login to codeartifact"
+      - aws codeartifact login --tool npm --repository serverless --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2
+      - npm install
+      - npm publish
+      - echo "publishing to codeartifact completed"
