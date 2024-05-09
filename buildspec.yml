@@ -4,6 +4,6 @@ phases:
     commands:
       - echo "login to codeartifact"
       - npm install
-      - aws codeartifact login --tool npm --repository serverless --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2
+      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2 --query authorizationToken --output text`
       - npm publish
       - echo "publishing to codeartifact completed"
