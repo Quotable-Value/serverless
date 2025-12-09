@@ -7,8 +7,5 @@ phases:
   build:
     commands:
       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2 --query authorizationToken --output text`
-      - export PACKAGE_VERSION=$(git describe --tags --abbrev=7)
-      - export PACKAGE_VERSION=$(echo "$PACKAGE_VERSION" | tr -d '_')
-      - npm version $PACKAGE_VERSION --no-git-tag-version
       - npm install
-      - npm publish --tag latest
+      - npm publish
