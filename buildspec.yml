@@ -8,4 +8,9 @@ phases:
     commands:
       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain quotable-value --domain-owner 948396734470 --region ap-southeast-2 --query authorizationToken --output text`
       - npm install
-      - npm publish
+      - |
+        if [[ "$(node -p "require('./package.json').version")" == *-security.* ]]; then
+          npm publish --tag security
+        else
+          npm publish
+        fi

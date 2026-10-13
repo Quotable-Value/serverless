@@ -1,0 +1,12 @@
+--- a/lib/service.js
++++ b/lib/service.js
+@@ -68,6 +68,9 @@
+     if (svcConfig) this.config.update(svcConfig, true);
+     if (config) this.config.update(config, true);
+ 
++    if (this.config.region && (typeof this.config.region !== 'string' || /[^a-z0-9-]/.test(this.config.region))) {
++      throw AWS.util.error(new Error(), { code: 'InvalidRegion', message: 'Invalid region value' });
++    }
+     this.validateService();
+     if (!this.config.endpoint) regionConfig.configureEndpoint(this);
+ 

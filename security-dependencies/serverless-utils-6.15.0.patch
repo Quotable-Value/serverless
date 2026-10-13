@@ -1,0 +1,33 @@
+--- a/download.js
++++ b/download.js
+@@ -19,13 +19,19 @@
+ const { URL } = require('url');
+ const contentDisposition = require('content-disposition');
+ const archiveType = require('archive-type');
+-const decompress = require('decompress');
++const decompress = async (...args) => {
++  const { default: extract } = await import('@xhmikosr/decompress');
++  return extract(...args);
++};
+ const filenamify = require('filenamify');
+ const getStream = require('get-stream');
+ const got = require('got');
+ const makeDir = require('make-dir');
+ const pEvent = require('p-event');
+-const FileType = require('file-type');
++const fileTypeFromBuffer = async (data) => {
++  const fileType = await import('file-type');
++  return fileType.fileTypeFromBuffer(data);
++};
+ const extName = require('ext-name');
+ 
+ const filenameFromPath = (res) => path.basename(new URL(res.requestUrl).pathname);
+@@ -60,7 +66,7 @@
+   let filename = filenameFromPath(res);
+ 
+   if (!path.extname(filename)) {
+-    const ext = ((await FileType.fromBuffer(data)) || {}).ext || getExtFromMime(res);
++    const ext = ((await fileTypeFromBuffer(data)) || {}).ext || getExtFromMime(res);
+ 
+     if (ext) {
+       filename = `${filename}.${ext}`;

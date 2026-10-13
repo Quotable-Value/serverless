@@ -40,7 +40,8 @@ def attach_tty
     $stdin.reopen "/dev/tty", "a+"
   end
 rescue
-  puts "tty unavailable"
+  # A controlling terminal is optional for non-interactive invocation.
+  nil
 end
 
 if __FILE__ == $0
